@@ -16,7 +16,7 @@ const Details = ({ type, time, place, info }) => {
         transition={{ duration: 0.5, type: "spring" }}
       >
         <h3 className="capitalize font-bold text-2xl">{type}&nbsp;</h3>
-        <span className="capitalize font-medium text-dark/75">
+        <span className="capitalize font-medium text-dark/75 dark:text-light/75">
           {time} | {place}
         </span>
         <p className="font-medium w-full">{info}</p>
@@ -37,7 +37,7 @@ const Education = () => {
       <div ref={ref} className="w-[75%] mx-auto relative">
         <motion.div
           style={{ scaleY: scrollYProgress }}
-          className="absolute left-9 top-0 w-[4px] h-full bg-dark origin-top"
+          className="absolute left-9 top-0 w-[4px] h-full bg-dark origin-top dark:bg-light"
         />
         <ul className="w-full flex flex-col items-start justify-between ml-4">
           <Details
@@ -50,24 +50,17 @@ const Education = () => {
             type="Bachelor of Science in Biomechatronics Engineering"
             time="Sept. 2018 – June 2022"
             place="National Taiwan University (NTU)"
-            info={
-              <>
-                <p>
-                  Awards: Dean's List Award for Top 5% of Students/Best Paper
+            info="Awards: Dean's List Award for Top 5% of Students/Best Paper
                   Award in 2020/2021 Conference on Biomechatronics and
                   Agricultural Machinery Engineering
-                </p>
-                <p>
+
                   Scholarship: 2022 CTCI Foundation Science and Technology
                   Scholarship (≈5000 USD)
-                </p>
-                <p>
+
                   Relevant Coursework: Practical Data Structures and Algorithms,
                   Machine Learning, Engineering Mathematics, Computer
                   Programming Language
-                </p>
-              </>
-            }
+                  "
           />
         </ul>
       </div>

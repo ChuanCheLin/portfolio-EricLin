@@ -6,11 +6,10 @@ const Skill = ({ name, x, y }) => {
     <motion.div
       className="flex items-center justify-center rounded-full 
         font-semibold bg-dark text-light py-3 px-6 shadow-dark cursor-pointer
-        absolute"
+        absolute dark:text-dark dark:bg-light"
       whileHover={{ scale: 1.05 }}
       initial={{ x: 0, y: 0 }}
-      whileInView={{ x: x, y: y }}
-      transition={{ duration: 0.5 }}
+      whileInView={{ x: x, y: y, transition: { duration: 0.5 } }}
       viewport={{ once: true }}
     >
       {name}
@@ -23,10 +22,11 @@ const Skills = () => {
     <>
       <h2 className="font-bold text-8xl mt-64 w-full text-center">Skills</h2>
       <div className="flex flex-row">
-        <div className="w-[50%] h-screen relative flex items-center justify-center rounded-full bg-circularLight">
+        <div className="w-[50%] h-screen relative flex items-center justify-center rounded-full bg-circularLight dark:bg-circularDark">
           <motion.div
             className="flex items-center justify-center rounded-full 
         font-semibold bg-dark text-light py-3 px-6 shadow-dark cursor-pointer
+        dark:text-dark dark:bg-light
         "
             whileHover={{ scale: 1.05 }}
           >
@@ -47,10 +47,11 @@ const Skills = () => {
           <Skill name="Django" x="10vw" y="-6vw" />
           <Skill name="Heroku" x="15vw" y="-12vw" />
         </div>
-        <div className="w-[50%] h-screen relative flex items-center justify-center rounded-full bg-circularLight">
+        <div className="w-[50%] h-screen relative flex items-center justify-center rounded-full bg-circularLight dark:bg-circularDark">
           <motion.div
             className="flex items-center justify-center rounded-full 
         font-semibold bg-dark text-light py-3 px-6 shadow-dark cursor-pointer
+        dark:text-dark dark:bg-light
         "
             whileHover={{ scale: 1.05 }}
           >
