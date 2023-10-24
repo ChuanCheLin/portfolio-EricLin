@@ -5,7 +5,9 @@ import AnimatedText from "@/components/AnimatedText";
 import Link from "next/link";
 import Image from "next/image";
 import { GithubIcon } from "@/components/Icons";
-import teaIdentification from "../../public/images/projects/teaDiseaseIdentificationAPP.jpg";
+import teaIdentification from "../../public/images/projects/teaDiseaseIdentificationAPP.png";
+import raven from "../../public/images/projects/raven.png";
+import puzzleGame from "../../public/images/projects/puzzleGame.png";
 import { motion } from "framer-motion";
 import TransitionEffect from "@/components/TransitionEffect";
 
@@ -153,23 +155,22 @@ const projects = () => {
           <div className="grid grid-cols-12 gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0">
             <div className="col-span-12">
               <FeaturedProject
-                title="Tea diseases identification and Prescription System"
+                title="Implementation of Few-Shot Object Detection Methods on Tea Diseases Identification"
                 img={teaIdentification}
-                summary="A real-time identification system to identify the causes of lesions and the severity stages of the lesions for tea leaves. 
-                Faster region-based convolution neural network (FRCNN) and cascade RCNN (CRCNN) were used in the study to identify the causes of the lesions. 
-                The FRCNN model achieved a mean average precision (mAP) of 74.0%. The CRCNN model achieved a mAP of 76.6%. 
-                The CRCNN model was hosted on a mobile device application to provide the service of tea diseases and harming insect identification to the public."
-                link="/"
-                github="/"
+                summary="Applying few-shot object detection (FSOD) methods generalize the flexibility of the model to incorporate novel-added classes. 
+                The results showed that the suggested FSOD method FSCE could efficiently expand the class number for identification without significantly sacrificing performance. 
+                It provides a feasible framework for novel class expansion with a lower cost of labor and time."
+                link="Implementation of Few-Shot Object Detection Methods on Tea Diseases Identification.pdf"
+                github="https://github.com/ChuanCheLin/FSCE_tea-diseases/tree/master"
                 type="Featured Project"
               />
             </div>
             <div className="col-span-6 sm:col-span-12">
               <Project
-                title="Tea diseases identification and Prescription System"
-                img={teaIdentification}
-                link="/"
-                github="/"
+                title="A Puzzle Game for Everyone"
+                img={puzzleGame}
+                link="https://github.com/ChuanCheLin/puzzle_game"
+                github="https://github.com/ChuanCheLin/puzzle_game"
                 type="Project"
               />
             </div>
@@ -184,14 +185,14 @@ const projects = () => {
             </div>
             <div className="col-span-12">
               <FeaturedProject
-                title="Tea diseases identification and Prescription System"
-                img={teaIdentification}
-                summary="A real-time identification system to identify the causes of lesions and the severity stages of the lesions for tea leaves. 
-                Faster region-based convolution neural network (FRCNN) and cascade RCNN (CRCNN) were used in the study to identify the causes of the lesions. 
-                The FRCNN model achieved a mean average precision (mAP) of 74.0%. The CRCNN model achieved a mAP of 76.6%. 
-                The CRCNN model was hosted on a mobile device application to provide the service of tea diseases and harming insect identification to the public."
-                link="/"
-                github="/"
+                title="Raven - Your AI Stylist"
+                img={raven}
+                summary="Raven is an AI outfit generator that empowers people to find what to wear and where to buy across different brands and retailers in the easiest and fastest way. 
+                To create this innovative platform, we utilized Next.js and Express to build the frontend and backend of the project. 
+                Moreover, I am responsible for the development of the pipeline for conversational AI integration using LangChain. 
+                This pipeline allows Raven to generate personalized outfit suggestions, making the fashion discovery process even more seamless and enjoyable for users."
+                link="https://www.ravenstyle.info/"
+                github="https://github.com/RavenStyle/raven-frontend"
                 type="Featured Project"
               />
             </div>
