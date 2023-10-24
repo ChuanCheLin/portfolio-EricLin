@@ -65,12 +65,12 @@ const about = () => {
                 recommendation. His past works includes developing an
                 identification model for tea diseases and establishing a website
                 and instant-message bot for real-time identification services.
-                To optimize efficiency, he focused his bachelor's thesis on
+                To optimize efficiency, he focused his bachelor&apos;s thesis on
                 few-shot learning to avoid redundant data collection and
                 labeling.
               </p>
               <p className="font-medium">
-                Chuan-Che's expertise also extends to automating routine
+                Chuan-Che&apos;s expertise also extends to automating routine
                 procedures using Python and shell scripts. With a solid academic
                 foundation and experience in developing machine learning models
                 and web/mobile applications in Linux environments, Chuan-Che Lin
