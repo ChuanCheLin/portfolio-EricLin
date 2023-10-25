@@ -8,6 +8,9 @@ import { GithubIcon } from "@/components/Icons";
 import teaIdentification from "../../public/images/projects/teaDiseaseIdentificationAPP.png";
 import raven from "../../public/images/projects/raven.png";
 import puzzleGame from "../../public/images/projects/puzzleGame.png";
+import AnimeFaceGeneration from "../../public/images/projects/AnimeFaceGeneration.png";
+import LunarLander from "../../public/images/projects/LunarLander.png";
+import DLtoolkit from "../../public/images/projects/deepLearningToolkit.png";
 import { motion } from "framer-motion";
 import TransitionEffect from "@/components/TransitionEffect";
 
@@ -176,10 +179,10 @@ const projects = () => {
             </div>
             <div className="col-span-6 sm:col-span-12">
               <Project
-                title="Tea diseases identification and Prescription System"
-                img={teaIdentification}
-                link="/"
-                github="/"
+                title="Lunar Lander (Reinforcement Learning)"
+                img={LunarLander}
+                link="https://github.com/ChuanCheLin/LunarLander_RL"
+                github="https://github.com/ChuanCheLin/LunarLander_RL"
                 type="Project"
               />
             </div>
@@ -198,19 +201,19 @@ const projects = () => {
             </div>
             <div className="col-span-6 sm:col-span-12">
               <Project
-                title="Tea diseases identification and Prescription System"
-                img={teaIdentification}
-                link="/"
-                github="/"
+                title="Anime Face Generation (Generative Adversarial Network)"
+                img={AnimeFaceGeneration}
+                link="https://github.com/ChuanCheLin/AnimeFaceGeneration"
+                github="https://github.com/ChuanCheLin/AnimeFaceGeneration"
                 type="Project"
               />
             </div>
             <div className="col-span-6 sm:col-span-12">
               <Project
-                title="Tea diseases identification and Prescription System"
-                img={teaIdentification}
-                link="/"
-                github="/"
+                title="Deep Learning Toolkit"
+                img={DLtoolkit}
+                link="https://github.com/ChuanCheLin/DeepLearning_toolkit"
+                github="https://github.com/ChuanCheLin/DeepLearning_toolkit"
                 type="Project"
               />
             </div>
