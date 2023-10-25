@@ -201,19 +201,19 @@ const projects = () => {
             </div>
             <div className="col-span-6 sm:col-span-12">
               <Project
-                title="Anime Face Generation (Generative Adversarial Network)"
-                img={AnimeFaceGeneration}
-                link="https://github.com/ChuanCheLin/AnimeFaceGeneration"
-                github="https://github.com/ChuanCheLin/AnimeFaceGeneration"
+                title="Deep Learning Toolkit"
+                img={DLtoolkit}
+                link="https://github.com/ChuanCheLin/DeepLearning_toolkit"
+                github="https://github.com/ChuanCheLin/DeepLearning_toolkit"
                 type="Project"
               />
             </div>
             <div className="col-span-6 sm:col-span-12">
               <Project
-                title="Deep Learning Toolkit"
-                img={DLtoolkit}
-                link="https://github.com/ChuanCheLin/DeepLearning_toolkit"
-                github="https://github.com/ChuanCheLin/DeepLearning_toolkit"
+                title="Anime Face Generation (Generative Adversarial Network)"
+                img={AnimeFaceGeneration}
+                link="https://github.com/ChuanCheLin/AnimeFaceGeneration"
+                github="https://github.com/ChuanCheLin/AnimeFaceGeneration"
                 type="Project"
               />
             </div>
