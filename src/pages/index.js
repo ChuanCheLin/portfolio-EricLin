@@ -38,9 +38,12 @@ export default function Home() {
               />
 
               <p className="my-4 text-base font-medium md:text-sm sm:text-xs">
-                M.S. candidate in Information Management at the University of
-                Illinois Urbana-Champaign, specializes in using machine learning
-                techniques to tackle real-world challenges.
+                Chuan-Che Lin, an M.S. candidate at the University of Illinois
+                Urbana-Champaign, excels in practical machine learning and web
+                applications. He has a track record of developing conversational
+                AI for outfit recommendations, disease identification models,
+                and other software projects, making him well-prepared for a
+                successful career as a skilled software engineer.
               </p>
               <div className="flex items-center self-start mt-2 lg:self-center">
                 <Link

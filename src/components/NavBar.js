@@ -169,7 +169,9 @@ const NavBar = () => {
               <LinkedInIcon />
             </motion.a>
             <button
-              onClick={() => setMode(mode === "light" ? "dark" : "light")}
+              onClick={() => {
+                setMode(mode === "light" ? "dark" : "light");
+              }}
               className={`flex ml-3 items-center justify-center rounded-full p-1 sm:mx-1
               ${
                 mode === "light" ? "bg-dark text-light" : "bg-light text-dark"

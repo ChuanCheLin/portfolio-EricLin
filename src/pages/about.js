@@ -5,7 +5,6 @@ import React, { useEffect, useRef } from "react";
 import profilePic from "../../public/images/profile/developer-pic-2.jpg";
 import Image from "next/image";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
-import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Education from "@/components/Education";
 import TransitionEffect from "@/components/TransitionEffect";
@@ -54,12 +53,12 @@ const about = () => {
               <h2 className="mb-4 text-lg font-bold uppercase text-dark/75 dark:text-light/75">
                 Autobiography
               </h2>
-              <p className="font-medium">
+              <p className="font-medium text-md lg:text-sm">
                 Chuan-Che Lin, M.S. candidate in Information Management at the
                 University of Illinois Urbana-Champaign, specializes in using
                 machine learning techniques to tackle real-world challenges.
               </p>
-              <p className="font-medium my-4">
+              <p className="font-medium my-4 text-md lg:text-sm">
                 He currently works as a Natural Language Processing Engineering
                 Intern to develop the pipeline for conversational AI for outfit
                 recommendation. His past works includes developing an
@@ -69,7 +68,7 @@ const about = () => {
                 few-shot learning to avoid redundant data collection and
                 labeling.
               </p>
-              <p className="font-medium">
+              <p className="font-medium text-md lg:text-sm">
                 Chuan-Che&apos;s expertise also extends to automating routine
                 procedures using Python and shell scripts. With a solid academic
                 foundation and experience in developing machine learning models
