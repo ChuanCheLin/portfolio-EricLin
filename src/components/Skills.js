@@ -22,7 +22,7 @@ const Skill = ({ name, x, y }) => {
 const Skills = () => {
   return (
     <>
-      <h2 className="font-bold text-8xl mt-64 w-full text-center md:text-6xl xs:text-4xl md:mt-32 sm:mt-16">
+      <h2 className="font-bold text-8xl mt-24 w-full text-center md:text-6xl xs:text-4xl md:mt-16 sm:mt-8">
         Skills
       </h2>
       <div className="flex flex-col">
@@ -38,7 +38,7 @@ const Skills = () => {
             className="flex items-center justify-center rounded-full 
         font-semibold bg-dark text-light p-8 shadow-dark cursor-pointer
         dark:text-dark dark:bg-light
-        lg:p-6 md:p-4 xs:text-xs xs:p-2
+        lg:p-6 md:p-5 xs:text-xs xs:p-4
         "
             whileHover={{ scale: 1.05 }}
           >
@@ -65,13 +65,14 @@ const Skills = () => {
           lg:bg-circularLightLg lg:dark:bg-circularDarkLg
           md:bg-circularLightMd md:dark:bg-circularDarkMd
           sm:bg-circularLightSm sm:dark:bg-circularDarkSm
+          mt-16 md:mt-8
         "
         >
           <motion.div
             className="flex items-center justify-center rounded-full 
         font-semibold bg-dark text-light p-8 shadow-dark cursor-pointer
         dark:text-dark dark:bg-light
-        lg:p-6 md:p-4 xs:text-xs xs:p-2
+        lg:p-6 md:p-5 xs:text-xs xs:p-4
         "
             whileHover={{ scale: 1.05 }}
           >

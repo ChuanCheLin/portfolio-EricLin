@@ -168,24 +168,6 @@ const projects = () => {
                 type="Featured Project"
               />
             </div>
-            <div className="col-span-6 sm:col-span-12">
-              <Project
-                title="A Puzzle Game for Everyone"
-                img={puzzleGame}
-                link="https://github.com/ChuanCheLin/puzzle_game"
-                github="https://github.com/ChuanCheLin/puzzle_game"
-                type="Project"
-              />
-            </div>
-            <div className="col-span-6 sm:col-span-12">
-              <Project
-                title="Lunar Lander (Reinforcement Learning)"
-                img={LunarLander}
-                link="https://github.com/ChuanCheLin/LunarLander_RL"
-                github="https://github.com/ChuanCheLin/LunarLander_RL"
-                type="Project"
-              />
-            </div>
             <div className="col-span-12">
               <FeaturedProject
                 title="Raven - Your AI Stylist"
@@ -205,6 +187,24 @@ const projects = () => {
                 img={DLtoolkit}
                 link="https://github.com/ChuanCheLin/DeepLearning_toolkit"
                 github="https://github.com/ChuanCheLin/DeepLearning_toolkit"
+                type="Project"
+              />
+            </div>
+            <div className="col-span-6 sm:col-span-12">
+              <Project
+                title="A Puzzle Game for Everyone"
+                img={puzzleGame}
+                link="https://github.com/ChuanCheLin/puzzle_game"
+                github="https://github.com/ChuanCheLin/puzzle_game"
+                type="Project"
+              />
+            </div>
+            <div className="col-span-6 sm:col-span-12">
+              <Project
+                title="Lunar Lander (Reinforcement Learning)"
+                img={LunarLander}
+                link="https://github.com/ChuanCheLin/LunarLander_RL"
+                github="https://github.com/ChuanCheLin/LunarLander_RL"
                 type="Project"
               />
             </div>

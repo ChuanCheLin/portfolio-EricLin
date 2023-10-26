@@ -19,7 +19,7 @@ export default function Home() {
       <main className="flex items-center text-dark w-full min-h-screen dark:text-light">
         <Layout className="pt-0 md:pt-16 sm:pt-8">
           <div className="flex items-center justify-between w-full lg:flex-col">
-            <div className="w-1/2 md:w-full">
+            <div className="w-1/2 md:w-full mr-5 md:mr-0">
               <Image
                 src={profilePic}
                 alt="EricLin"
@@ -46,12 +46,11 @@ export default function Home() {
                 <Link
                   href="/Resume_ChuanCheLin.pdf"
                   target="_blank"
-                  className="flex items-center bg-dark text-light p-2.5 px-6 
+                  className="flex items-center bg-dark text-light p-2.5 px-6
                   rounded-lg text-lg font-semibold hover:bg-light hover:text-dark
                   border-2 border-solid border-transparent hover:border-dark
                   dark:bg-light dark:text-dark hover:dark:bg-dark hover:dark:text-light
-                  hover:dark:border-light md:p-2 md:px-4 md:text-base"
-                  download={true}
+                  hover:dark:border-light md:p-2 md:px-4 md:text-base xs:p-1 xs:px-2"
                 >
                   Resume <LinkArrow className={"w-6 ml-1"} />
                 </Link>
