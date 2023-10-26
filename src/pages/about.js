@@ -9,6 +9,7 @@ import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Education from "@/components/Education";
 import TransitionEffect from "@/components/TransitionEffect";
+import SkillSets from "../components/SkillSets";
 
 const AnimatedNumbers = ({ value }) => {
   const ref = useRef(null);
@@ -54,10 +55,9 @@ const about = () => {
                 Autobiography
               </h2>
               <p className="font-medium">
-                Chuan-Che Lin, an M.S. candidate in Information Management at
-                the University of Illinois Urbana-Champaign, specializes in
-                using machine learning techniques to tackle real-world
-                challenges.
+                Chuan-Che Lin, M.S. candidate in Information Management at the
+                University of Illinois Urbana-Champaign, specializes in using
+                machine learning techniques to tackle real-world challenges.
               </p>
               <p className="font-medium my-4">
                 He currently works as a Natural Language Processing Engineering
@@ -121,8 +121,7 @@ const about = () => {
               </div>
             </div>
           </div>
-
-          <Skills />
+          <SkillSets />
           <Experience />
           <Education />
         </Layout>

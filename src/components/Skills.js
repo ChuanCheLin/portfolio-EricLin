@@ -88,7 +88,7 @@ const Skills = () => {
         <Skill name="HTML" x="0vw" y="-20vw" />
         <Skill name="CSS" x="-25vw" y="18vw" />
 
-        <Skill name="Django" x="18vw" y="18vw" />
+        <Skill name="Django" x="18vw" y="18yvw" />
         <Skill name="Heroku" x="20vw" y="-20vw" />
       </div>
       <div

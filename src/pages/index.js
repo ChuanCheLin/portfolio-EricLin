@@ -38,7 +38,7 @@ export default function Home() {
               />
 
               <p className="my-4 text-base font-medium md:text-sm sm:text-xs">
-                An M.S. candidate in Information Management at the University of
+                M.S. candidate in Information Management at the University of
                 Illinois Urbana-Champaign, specializes in using machine learning
                 techniques to tackle real-world challenges.
               </p>
