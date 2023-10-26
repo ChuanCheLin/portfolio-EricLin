@@ -26,7 +26,7 @@ const SkillProgressBar = ({ skill, level, color = "teal" }) => {
         <div className="flex items-center justify-between">
           <div className="text-left w-[10%]">
             <span
-              className={`text-xs font-semibold inline-block ${colorClass}`}
+              className={`text-xs font-semibold inline-block ${colorClass} dark:text-light`}
             >
               {progress}%
             </span>
@@ -76,11 +76,62 @@ const SkillSets = () => (
       <div className="col-span-6">
         <SkillProgressBar skill="C++" level={60} color="pink" />
       </div>
+    </div>
+    <h3 className="font-bold text-4xl my-8 w-full text-center md:text-2xl xs:text-xl md:my-4 sm:my-2">
+      Tools and Frameworks
+    </h3>
+    <div className="grid grid-cols-12 gap-24 gap-y-4 xl:gap-x-16 lg:gap-x-8 md:gap-y-12 sm:gap-y-6 sm:gap-x-0">
       <div className="col-span-6">
-        <SkillProgressBar skill="UI Animation" level={60} color="orange" />
+        <SkillProgressBar skill="Git" level={80} color="green" />
       </div>
       <div className="col-span-6">
-        <SkillProgressBar skill="Git" level={85} color="gray" />
+        <SkillProgressBar skill="PyTorch" level={80} color="yellow" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="OpenCV" level={70} color="teal" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="Docker" level={70} color="blue" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="Postman" level={60} color="orange" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="LangChain" level={60} color="red" />
+      </div>
+    </div>
+    <h3 className="font-bold text-4xl my-8 w-full text-center md:text-2xl xs:text-xl md:my-4 sm:my-2">
+      Web Development
+    </h3>
+    <div className="grid grid-cols-12 gap-24 gap-y-4 xl:gap-x-16 lg:gap-x-8 md:gap-y-12 sm:gap-y-6 sm:gap-x-0">
+      <div className="col-span-6">
+        <SkillProgressBar skill="NextJS" level={80} color="yellow" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="ExpressJS" level={80} color="teal" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="ReactJS" level={80} color="orange" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="Tailwind CSS" level={75} color="green" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="Django" level={70} color="blue" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="Heroku" level={60} color="red" />
+      </div>
+    </div>
+    <h3 className="font-bold text-4xl my-8 w-full text-center md:text-2xl xs:text-xl md:my-4 sm:my-2">
+      Database
+    </h3>
+    <div className="grid grid-cols-12 gap-24 gap-y-4 xl:gap-x-16 lg:gap-x-8 md:gap-y-12 sm:gap-y-6 sm:gap-x-0">
+      <div className="col-span-6">
+        <SkillProgressBar skill="MySQL" level={80} color="indigo" />
+      </div>
+      <div className="col-span-6">
+        <SkillProgressBar skill="MongoDB" level={60} color="pink" />
       </div>
     </div>
   </div>

@@ -9,6 +9,7 @@ module.exports = {
   ],
   safelist: [
     "text-teal-600",
+    "text-teal-300",
     "bg-teal-500",
     "bg-teal-300",
     "text-blue-600",
