@@ -1,7 +1,28 @@
 import React, { useState, useEffect } from "react";
 
 const gridSize = 10;
-const words = ["CAT", "DOG", "BIRD", "FISH"];
+const wordPool = [
+  "CAT",
+  "DOG",
+  "BIRD",
+  "FISH",
+  "ELEPHANT",
+  "GIRAFFE",
+  "KANGAROO",
+  "MONKEY",
+  "APPLE",
+  "BANANA",
+  "CHERRY",
+  "DATE",
+  "HAPPY",
+  "JOLLY",
+  "BRIGHT",
+  "SMART",
+  "COMPUTER",
+  "KEYBOARD",
+  "MONITOR",
+  "PRINTER",
+];
 
 const directions = {
   HORIZONTAL: { x: 1, y: 0 },
@@ -77,6 +98,11 @@ const fillGridWithRandomLetters = (grid) => {
   );
 };
 
+const selectRandomWords = (wordPool, numberOfWords) => {
+  const shuffled = [...wordPool].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, numberOfWords);
+};
+
 const WordSearchGame = () => {
   const [grid, setGrid] = useState([]);
   const [selectedLetters, setSelectedLetters] = useState([]);
@@ -86,11 +112,7 @@ const WordSearchGame = () => {
   const [foundWords, setFoundWords] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [successSound, setSuccessSound] = useState();
-
-  const clearSelection = () => {
-    setSelectedLetters([]);
-    // Reset any other relevant state
-  };
+  const [currentWords, setCurrentWords] = useState([]);
 
   const handleMouseDown = (rowIndex, cellIndex) => {
     setDragStart({ x: cellIndex, y: rowIndex });
@@ -154,7 +176,10 @@ const WordSearchGame = () => {
 
     const selectedWord = selectedLetters.join("");
 
-    if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
+    if (
+      currentWords.includes(selectedWord) &&
+      !foundWords.includes(selectedWord)
+    ) {
       setFoundWords([...foundWords, selectedWord]);
       setSuccessMessage(`${selectedWord} Found!`);
       setTimeout(() => setSuccessMessage(""), 2000);
@@ -163,6 +188,8 @@ const WordSearchGame = () => {
   };
 
   useEffect(() => {
+    const words = selectRandomWords(wordPool, 10);
+    setCurrentWords(words);
     let newGrid = createEmptyGrid(gridSize);
     newGrid = placeWordsInGrid(newGrid, words);
     newGrid = fillGridWithRandomLetters(newGrid);
@@ -214,10 +241,10 @@ const WordSearchGame = () => {
           )}
         </div>
         <div>
-          <h3>Found Words</h3>
+          <h3>Target Words</h3>
           {successMessage && <div style={popupStyle}>{successMessage}</div>}
           <ul>
-            {words.map((word) => (
+            {currentWords.map((word) => (
               <li
                 key={word}
                 className={
