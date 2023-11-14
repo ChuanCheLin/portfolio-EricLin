@@ -80,16 +80,75 @@ const fillGridWithRandomLetters = (grid) => {
 const WordSearchGame = () => {
   const [grid, setGrid] = useState([]);
   const [selectedLetters, setSelectedLetters] = useState([]);
-
-  const handleCellClick = (rowIndex, cellIndex) => {
-    const newSelectedLetters = [...selectedLetters, grid[rowIndex][cellIndex]];
-    setSelectedLetters(newSelectedLetters);
-    // You might want to add logic to manage the selection of cells here
-  };
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState(null);
+  const [dragSelection, setDragSelection] = useState([]);
 
   const clearSelection = () => {
     setSelectedLetters([]);
     // Reset any other relevant state
+  };
+
+  const handleMouseDown = (rowIndex, cellIndex) => {
+    setDragStart({ x: cellIndex, y: rowIndex });
+    setIsDragging(true);
+    setSelectedLetters([grid[rowIndex][cellIndex]]);
+  };
+
+  const handleMouseEnter = (rowIndex, cellIndex) => {
+    if (!isDragging || !dragStart) return;
+
+    const path = [];
+    const newSelectedLetters = [];
+    const newDragSelection = [];
+    const xDiff = cellIndex - dragStart.x;
+    const yDiff = rowIndex - dragStart.y;
+
+    if (dragStart.y === rowIndex) {
+      // Horizontal selection
+      for (
+        let i = Math.min(dragStart.x, cellIndex);
+        i <= Math.max(dragStart.x, cellIndex);
+        i++
+      ) {
+        path.push({ x: i, y: rowIndex });
+      }
+    } else if (dragStart.x === cellIndex) {
+      // Vertical selection
+      for (
+        let i = Math.min(dragStart.y, rowIndex);
+        i <= Math.max(dragStart.y, rowIndex);
+        i++
+      ) {
+        path.push({ x: cellIndex, y: i });
+      }
+    } else if (Math.abs(xDiff) === Math.abs(yDiff)) {
+      // Diagonal selection
+      const xStep = xDiff > 0 ? 1 : -1;
+      const yStep = yDiff > 0 ? 1 : -1;
+      let x = dragStart.x;
+      let y = dragStart.y;
+      for (let i = 0; i <= Math.abs(xDiff); i++) {
+        path.push({ x: x, y: y });
+        x += xStep;
+        y += yStep;
+      }
+    }
+
+    path.forEach(({ x, y }) => {
+      newDragSelection.push({ x, y });
+      newSelectedLetters.push(grid[y][x]);
+    });
+
+    setDragSelection(newDragSelection);
+    setSelectedLetters(newSelectedLetters);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setDragStart(null);
+    setDragSelection([]);
+    // Add logic here to check if the selected letters form a word
   };
 
   useEffect(() => {
@@ -107,14 +166,17 @@ const WordSearchGame = () => {
           row.map((cell, cellIndex) => (
             <button
               key={`${rowIndex}-${cellIndex}`}
-              className={`border border-gray-300 text-lg p-2 ${
-                selectedLetters.some(
-                  (cell) => cell.x === cellIndex && cell.y === rowIndex
+              onMouseDown={() => handleMouseDown(rowIndex, cellIndex)}
+              onMouseEnter={() => handleMouseEnter(rowIndex, cellIndex)}
+              onMouseUp={handleMouseUp}
+              className={`border border-gray-300 p-2 ${
+                dragSelection.some(
+                  (selectedCell) =>
+                    selectedCell.x === cellIndex && selectedCell.y === rowIndex
                 )
-                  ? "bg-blue-200"
+                  ? "bg-blue-200" // Highlight color for cells in drag selection
                   : "bg-white"
-              } hover:bg-blue-100`}
-              onClick={() => handleCellClick(rowIndex, cellIndex)}
+              }`}
             >
               {cell}
             </button>
