@@ -93,6 +93,17 @@ const WordSearchGame = () => {
   const [successSound, setSuccessSound] = useState();
   const [currentWords, setCurrentWords] = useState([]);
   const [foundCells, setFoundCells] = useState([]);
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const [isGameActive, setIsGameActive] = useState(false);
+
+  const generateNewGrid = () => {
+    const selectedWords = selectRandomWords(wordPool, 10); // Choose how many words you want to place
+    setCurrentWords(selectedWords);
+    let newGrid = createEmptyGrid(gridSize);
+    newGrid = placeWordsInGrid(newGrid, selectedWords);
+    newGrid = fillGridWithRandomLetters(newGrid);
+    setGrid(newGrid);
+  };
 
   const handleMouseDown = (rowIndex, cellIndex) => {
     setDragStart({ x: cellIndex, y: rowIndex });
@@ -170,18 +181,44 @@ const WordSearchGame = () => {
     setDragSelection([]);
   };
 
+  // Start the game (and the timer)
+  const startGame = () => {
+    setIsGameActive(true);
+    setTimeElapsed(0);
+    setFoundWords([]);
+    setFoundCells([]);
+    generateNewGrid();
+  };
+
+  // End the game (and stop the timer)
+  const endGame = () => {
+    setIsGameActive(false);
+    // Other game end logic...
+  };
+
   useEffect(() => {
-    const words = selectRandomWords(wordPool, 10);
-    setCurrentWords(words);
-    let newGrid = createEmptyGrid(gridSize);
-    newGrid = placeWordsInGrid(newGrid, words);
-    newGrid = fillGridWithRandomLetters(newGrid);
-    setGrid(newGrid);
+    setIsGameActive(true);
+    // Word Grid
+    generateNewGrid();
+
+    // Audio
     const audio = new Audio("/sounds/CorrectAnswerSoundEffect.mp3");
     // audio.oncanplaythrough = () => console.log("Audio loaded");
     // audio.onerror = () => console.log("Error loading audio");
     setSuccessSound(audio);
   }, []);
+
+  useEffect(() => {
+    let timer;
+
+    if (isGameActive) {
+      timer = setInterval(() => {
+        setTimeElapsed((prevTime) => prevTime + 1);
+      }, 1000); // Update the time every second
+    }
+
+    return () => clearInterval(timer); // Clear timer on cleanup
+  }, [isGameActive]);
 
   const popupStyle = {
     position: "absolute",
@@ -201,14 +238,22 @@ const WordSearchGame = () => {
       <h2 className="text-2xl font-bold mb-4 dark:text-white">
         Word Search Game
       </h2>
-      <div className="flex flex-row items-start justify-center gap-10">
+      <div className="flex flex-row items-start justify-center gap-10 w-full">
         {/* Scoreboard */}
-        <div className="dark:text-white">
+        <div className="flex-grow-0 dark:text-white">
           <h3 className="text-lg font-semibold mb-2">Scoreboard</h3>
-          {/* Add scoreboard content here */}
+          <div>Words Found: {foundWords.length}</div>
+          <div>Time Elapsed: {timeElapsed} seconds</div>
+          <button
+            onClick={startGame}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            New Game
+          </button>
         </div>
+
         {/* Game Grid */}
-        <div className="grid grid-cols-10 gap-1">
+        <div className="grid grid-cols-10 gap-1 flex-grow">
           {grid.map((row, rowIndex) =>
             row.map((cell, cellIndex) => (
               <button
@@ -238,7 +283,7 @@ const WordSearchGame = () => {
         </div>
         {/* Target Words */}
         <div>
-          <h3 className="text-lg font-semibold mb-2 dark:text-white">
+          <h3 className="text-lg font-semibold mb-2 dark:text-white flex-grow-0">
             Target Words
           </h3>
           {successMessage && <div style={popupStyle}>{successMessage}</div>}
