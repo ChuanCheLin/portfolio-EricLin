@@ -83,6 +83,9 @@ const WordSearchGame = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(null);
   const [dragSelection, setDragSelection] = useState([]);
+  const [foundWords, setFoundWords] = useState([]);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [successSound, setSuccessSound] = useState();
 
   const clearSelection = () => {
     setSelectedLetters([]);
@@ -148,7 +151,15 @@ const WordSearchGame = () => {
     setIsDragging(false);
     setDragStart(null);
     setDragSelection([]);
-    // Add logic here to check if the selected letters form a word
+
+    const selectedWord = selectedLetters.join("");
+
+    if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
+      setFoundWords([...foundWords, selectedWord]);
+      setSuccessMessage(`${selectedWord} Found!`);
+      setTimeout(() => setSuccessMessage(""), 2000);
+      successSound.play();
+    }
   };
 
   useEffect(() => {
@@ -156,43 +167,69 @@ const WordSearchGame = () => {
     newGrid = placeWordsInGrid(newGrid, words);
     newGrid = fillGridWithRandomLetters(newGrid);
     setGrid(newGrid);
+    const audio = new Audio("/sounds/Correct Answer Sound Effect.mp3");
+    // audio.oncanplaythrough = () => console.log("Audio loaded");
+    // audio.onerror = () => console.log("Error loading audio");
+    setSuccessSound(audio);
   }, []);
+
+  const popupStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0px 0px 10px rgba(0,0,0,0.5)",
+    display: successMessage ? "block" : "none",
+    zIndex: 1000, // Ensure it's above other elements
+  };
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <h2 className="text-2xl font-bold mb-4">Word Search Game</h2>
-      <div className="grid grid-cols-10 gap-1">
-        {grid.map((row, rowIndex) =>
-          row.map((cell, cellIndex) => (
-            <button
-              key={`${rowIndex}-${cellIndex}`}
-              onMouseDown={() => handleMouseDown(rowIndex, cellIndex)}
-              onMouseEnter={() => handleMouseEnter(rowIndex, cellIndex)}
-              onMouseUp={handleMouseUp}
-              className={`border border-gray-300 p-2 ${
-                dragSelection.some(
-                  (selectedCell) =>
-                    selectedCell.x === cellIndex && selectedCell.y === rowIndex
-                )
-                  ? "bg-blue-200" // Highlight color for cells in drag selection
-                  : "bg-white"
-              }`}
-            >
-              {cell}
-            </button>
-          ))
-        )}
+      <div className="flex flex-row items-start justify-center gap-10">
+        <div className="grid grid-cols-10 gap-1">
+          {grid.map((row, rowIndex) =>
+            row.map((cell, cellIndex) => (
+              <button
+                key={`${rowIndex}-${cellIndex}`}
+                onMouseDown={() => handleMouseDown(rowIndex, cellIndex)}
+                onMouseEnter={() => handleMouseEnter(rowIndex, cellIndex)}
+                onMouseUp={handleMouseUp}
+                className={`border border-gray-300 p-2 ${
+                  dragSelection.some(
+                    (selectedCell) =>
+                      selectedCell.x === cellIndex &&
+                      selectedCell.y === rowIndex
+                  )
+                    ? "bg-blue-200" // Highlight color for cells in drag selection
+                    : "bg-white"
+                }`}
+              >
+                {cell}
+              </button>
+            ))
+          )}
+        </div>
+        <div>
+          <h3>Found Words</h3>
+          {successMessage && <div style={popupStyle}>{successMessage}</div>}
+          <ul>
+            {words.map((word) => (
+              <li
+                key={word}
+                className={
+                  foundWords.includes(word) ? "text-green-500" : "text-black"
+                }
+              >
+                {word}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <div className="mt-4 text-lg">
-        Selected:{" "}
-        <span className="font-medium">{selectedLetters.join("")}</span>
-      </div>
-      <button
-        onClick={clearSelection}
-        className="mt-3 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 hover:shadow-md transition duration-200"
-      >
-        Clear Selection
-      </button>
     </div>
   );
 };
