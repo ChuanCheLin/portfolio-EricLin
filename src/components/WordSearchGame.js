@@ -1,28 +1,7 @@
 import React, { useState, useEffect } from "react";
+import wordPool from "./wordPool";
 
 const gridSize = 10;
-const wordPool = [
-  "CAT",
-  "DOG",
-  "BIRD",
-  "FISH",
-  "ELEPHANT",
-  "GIRAFFE",
-  "KANGAROO",
-  "MONKEY",
-  "APPLE",
-  "BANANA",
-  "CHERRY",
-  "DATE",
-  "HAPPY",
-  "JOLLY",
-  "BRIGHT",
-  "SMART",
-  "COMPUTER",
-  "KEYBOARD",
-  "MONITOR",
-  "PRINTER",
-];
 
 const directions = {
   HORIZONTAL: { x: 1, y: 0 },
@@ -113,6 +92,7 @@ const WordSearchGame = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [successSound, setSuccessSound] = useState();
   const [currentWords, setCurrentWords] = useState([]);
+  const [foundCells, setFoundCells] = useState([]);
 
   const handleMouseDown = (rowIndex, cellIndex) => {
     setDragStart({ x: cellIndex, y: rowIndex });
@@ -172,7 +152,6 @@ const WordSearchGame = () => {
   const handleMouseUp = () => {
     setIsDragging(false);
     setDragStart(null);
-    setDragSelection([]);
 
     const selectedWord = selectedLetters.join("");
 
@@ -181,10 +160,14 @@ const WordSearchGame = () => {
       !foundWords.includes(selectedWord)
     ) {
       setFoundWords([...foundWords, selectedWord]);
+      setFoundCells([...foundCells, ...dragSelection]);
       setSuccessMessage(`${selectedWord} Found!`);
       setTimeout(() => setSuccessMessage(""), 2000);
       successSound.play();
     }
+
+    setSelectedLetters([]);
+    setDragSelection([]);
   };
 
   useEffect(() => {
@@ -215,40 +198,58 @@ const WordSearchGame = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
-      <h2 className="text-2xl font-bold mb-4">Word Search Game</h2>
+      <h2 className="text-2xl font-bold mb-4 dark:text-white">
+        Word Search Game
+      </h2>
       <div className="flex flex-row items-start justify-center gap-10">
+        {/* Scoreboard */}
+        <div className="dark:text-white">
+          <h3 className="text-lg font-semibold mb-2">Scoreboard</h3>
+          {/* Add scoreboard content here */}
+        </div>
+        {/* Game Grid */}
         <div className="grid grid-cols-10 gap-1">
           {grid.map((row, rowIndex) =>
             row.map((cell, cellIndex) => (
               <button
                 key={`${rowIndex}-${cellIndex}`}
-                onMouseDown={() => handleMouseDown(rowIndex, cellIndex)}
-                onMouseEnter={() => handleMouseEnter(rowIndex, cellIndex)}
-                onMouseUp={handleMouseUp}
                 className={`border border-gray-300 p-2 ${
-                  dragSelection.some(
-                    (selectedCell) =>
-                      selectedCell.x === cellIndex &&
-                      selectedCell.y === rowIndex
+                  foundCells.some(
+                    (foundCell) =>
+                      foundCell.x === cellIndex && foundCell.y === rowIndex
                   )
+                    ? "bg-green-200" // Different color for cells in found words
+                    : dragSelection.some(
+                        (selectedCell) =>
+                          selectedCell.x === cellIndex &&
+                          selectedCell.y === rowIndex
+                      )
                     ? "bg-blue-200" // Highlight color for cells in drag selection
                     : "bg-white"
                 }`}
+                onMouseDown={() => handleMouseDown(rowIndex, cellIndex)}
+                onMouseEnter={() => handleMouseEnter(rowIndex, cellIndex)}
+                onMouseUp={handleMouseUp}
               >
                 {cell}
               </button>
             ))
           )}
         </div>
+        {/* Target Words */}
         <div>
-          <h3>Target Words</h3>
+          <h3 className="text-lg font-semibold mb-2 dark:text-white">
+            Target Words
+          </h3>
           {successMessage && <div style={popupStyle}>{successMessage}</div>}
           <ul>
             {currentWords.map((word) => (
               <li
                 key={word}
                 className={
-                  foundWords.includes(word) ? "text-green-500" : "text-black"
+                  foundWords.includes(word)
+                    ? "text-green-500"
+                    : "text-black dark:text-white"
                 }
               >
                 {word}
