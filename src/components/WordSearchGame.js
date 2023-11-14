@@ -194,7 +194,7 @@ const WordSearchGame = () => {
     newGrid = placeWordsInGrid(newGrid, words);
     newGrid = fillGridWithRandomLetters(newGrid);
     setGrid(newGrid);
-    const audio = new Audio("/sounds/Correct Answer Sound Effect.mp3");
+    const audio = new Audio("/sounds/CorrectAnswerSoundEffect.mp3");
     // audio.oncanplaythrough = () => console.log("Audio loaded");
     // audio.onerror = () => console.log("Error loading audio");
     setSuccessSound(audio);
