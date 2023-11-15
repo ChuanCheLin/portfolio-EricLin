@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import wordPool from "./wordPool";
 
 const gridSize = 10;
+const targetNum = 8;
 
 const directions = {
   HORIZONTAL: { x: 1, y: 0 },
@@ -95,9 +96,10 @@ const WordSearchGame = () => {
   const [foundCells, setFoundCells] = useState([]);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [isGameActive, setIsGameActive] = useState(false);
+  const [isGameCompleted, setIsGameCompleted] = useState(false);
 
   const generateNewGrid = () => {
-    const selectedWords = selectRandomWords(wordPool, 10); // Choose how many words you want to place
+    const selectedWords = selectRandomWords(wordPool, targetNum); // Choose how many words you want to place
     setCurrentWords(selectedWords);
     let newGrid = createEmptyGrid(gridSize);
     newGrid = placeWordsInGrid(newGrid, selectedWords);
@@ -175,6 +177,14 @@ const WordSearchGame = () => {
       setSuccessMessage(`${selectedWord} Found!`);
       setTimeout(() => setSuccessMessage(""), 2000);
       successSound.play();
+
+      const newFoundWords = [...foundWords, selectedWord];
+      setFoundWords(newFoundWords);
+
+      if (newFoundWords.length === currentWords.length) {
+        setIsGameCompleted(true);
+        setIsGameActive(false); // Stop the timer
+      }
     }
 
     setSelectedLetters([]);
@@ -188,12 +198,41 @@ const WordSearchGame = () => {
     setFoundWords([]);
     setFoundCells([]);
     generateNewGrid();
+    setIsGameCompleted(false);
   };
 
   // End the game (and stop the timer)
   const endGame = () => {
     setIsGameActive(false);
     // Other game end logic...
+  };
+
+  const CongratulatoryPopup = () => {
+    return (
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-xl border border-gray-300">
+        <h3 className="text-xl font-bold text-center text-blue-600 mb-4">
+          Congratulations!
+        </h3>
+        <p className="text-lg text-gray-700">You found all the words.</p>
+        <p className="text-md text-gray-600">
+          Total Time: {timeElapsed} seconds
+        </p>
+        <div className="flex justify-center gap-4 mt-4">
+          <button
+            onClick={() => setIsGameCompleted(false)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Close
+          </button>
+          <button
+            onClick={startGame}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            New Game
+          </button>
+        </div>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -235,6 +274,7 @@ const WordSearchGame = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
+      {isGameCompleted && <CongratulatoryPopup />}
       <h2 className="text-2xl font-bold mb-4 dark:text-white">
         Word Search Game
       </h2>
