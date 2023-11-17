@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import wordPool from "./wordPool";
+import { useRef } from "react";
 
 const gridSize = 10;
 const targetNum = 8;
@@ -98,6 +99,7 @@ const WordSearchGame = () => {
   const [isGameActive, setIsGameActive] = useState(false);
   const [isGameCompleted, setIsGameCompleted] = useState(false);
   const [incorrectSound, setIncorrectSound] = useState();
+  const gridRef = useRef(null);
 
   const generateNewGrid = () => {
     const selectedWords = selectRandomWords(wordPool, targetNum); // Choose how many words you want to place
@@ -108,7 +110,44 @@ const WordSearchGame = () => {
     setGrid(newGrid);
   };
 
+  const getCellFromTouch = (touch) => {
+    const gridBounds = gridRef.current.getBoundingClientRect();
+    const touchX = touch.clientX - gridBounds.left; // Relative X coordinate
+    const touchY = touch.clientY - gridBounds.top; // Relative Y coordinate
+
+    const cellSize = gridBounds.width / gridSize; // Assuming square cells
+    const colIndex = Math.floor(touchX / cellSize);
+    const rowIndex = Math.floor(touchY / cellSize);
+
+    return { colIndex, rowIndex };
+  };
+
+  const handleTouchDown = (event) => {
+    if (event.touches) {
+      event.preventDefault();
+      const { colIndex, rowIndex } = getCellFromTouch(event.touches[0]);
+      handleMouseDown(rowIndex, colIndex);
+    }
+  };
+
+  const handleTouchEnter = (event) => {
+    if (event.touches) {
+      event.preventDefault();
+      const { colIndex, rowIndex } = getCellFromTouch(event.touches[0]);
+      handleMouseEnter(rowIndex, colIndex);
+    }
+  };
+
   const handleMouseDown = (rowIndex, cellIndex) => {
+    if (
+      rowIndex < 0 ||
+      rowIndex >= grid.length ||
+      cellIndex < 0 ||
+      cellIndex >= grid[rowIndex].length
+    ) {
+      // Indices are out of bounds
+      return;
+    }
     setDragStart({ x: cellIndex, y: rowIndex });
     setIsDragging(true);
     setSelectedLetters([grid[rowIndex][cellIndex]]);
@@ -155,8 +194,10 @@ const WordSearchGame = () => {
     }
 
     path.forEach(({ x, y }) => {
-      newDragSelection.push({ x, y });
-      newSelectedLetters.push(grid[y][x]);
+      if (y >= 0 && y < grid.length && x >= 0 && x < grid[y].length) {
+        newDragSelection.push({ x, y });
+        newSelectedLetters.push(grid[y][x]);
+      }
     });
 
     setDragSelection(newDragSelection);
@@ -218,13 +259,13 @@ const WordSearchGame = () => {
         <div className="flex justify-center gap-4 mt-4">
           <button
             onClick={() => setIsGameCompleted(false)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
           >
             Close
           </button>
           <button
             onClick={startGame}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"
           >
             New Game
           </button>
@@ -275,30 +316,30 @@ const WordSearchGame = () => {
   return (
     <div className="flex flex-col items-center justify-center p-4">
       {isGameCompleted && <CongratulatoryPopup />}
-      <h2 className="text-2xl font-bold mb-4 dark:text-white">
+      <h2 className="text-2xl sm:text-lg font-bold mb-4 dark:text-white">
         Word Search Game
       </h2>
       <div className="flex flex-row items-start justify-center gap-10 w-full">
         {/* Scoreboard */}
         <div className="flex-grow-0 dark:text-white">
-          <h3 className="text-lg font-semibold mb-2">Scoreboard</h3>
-          <div>Words Found: {foundWords.length}</div>
-          <div>Time Elapsed: {timeElapsed} seconds</div>
+          <h3 className="text-lg sm:text-sm font-semibold mb-2">Scoreboard</h3>
+          <div className="sm:text-xs">Words Found: {foundWords.length}</div>
+          <div className="sm:text-xs">Time Elapsed: {timeElapsed} seconds</div>
           <button
             onClick={startGame}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="sm:text-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 sm:py-1 sm:px-4 rounded focus:outline-none focus:shadow-outline"
           >
             New Game
           </button>
         </div>
 
         {/* Game Grid */}
-        <div className="grid grid-cols-10 gap-1 flex-grow">
+        <div ref={gridRef} className="grid grid-cols-10 gap-1">
           {grid.map((row, rowIndex) =>
             row.map((cell, cellIndex) => (
               <button
                 key={`${rowIndex}-${cellIndex}`}
-                className={`border border-gray-300 p-2 ${
+                className={`border border-gray-300 p-2 sm:p-0 text-lg sm:text-xs ${
                   foundCells.some(
                     (foundCell) =>
                       foundCell.x === cellIndex && foundCell.y === rowIndex
@@ -315,6 +356,9 @@ const WordSearchGame = () => {
                 onMouseDown={() => handleMouseDown(rowIndex, cellIndex)}
                 onMouseEnter={() => handleMouseEnter(rowIndex, cellIndex)}
                 onMouseUp={handleMouseUp}
+                onTouchStart={(e) => handleTouchDown(e)}
+                onTouchMove={(e) => handleTouchEnter(e)}
+                onTouchEnd={handleMouseUp}
               >
                 {cell}
               </button>
@@ -323,7 +367,7 @@ const WordSearchGame = () => {
         </div>
         {/* Target Words */}
         <div>
-          <h3 className="text-lg font-semibold mb-2 dark:text-white flex-grow-0">
+          <h3 className="text-lg sm:text-xs font-semibold mb-2 dark:text-white flex-grow-0">
             Target Words
           </h3>
           {successMessage && <div style={popupStyle}>{successMessage}</div>}
@@ -333,8 +377,8 @@ const WordSearchGame = () => {
                 key={word}
                 className={
                   foundWords.includes(word)
-                    ? "text-green-500"
-                    : "text-black dark:text-white"
+                    ? "text-green-500 sm:text-xs"
+                    : "text-black dark:text-white sm:text-xs"
                 }
               >
                 {word}
