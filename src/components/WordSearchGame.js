@@ -97,6 +97,7 @@ const WordSearchGame = () => {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [isGameActive, setIsGameActive] = useState(false);
   const [isGameCompleted, setIsGameCompleted] = useState(false);
+  const [incorrectSound, setIncorrectSound] = useState();
 
   const generateNewGrid = () => {
     const selectedWords = selectRandomWords(wordPool, targetNum); // Choose how many words you want to place
@@ -185,6 +186,9 @@ const WordSearchGame = () => {
         setIsGameCompleted(true);
         setIsGameActive(false); // Stop the timer
       }
+    } else {
+      // Play the incorrect sound
+      incorrectSound.play();
     }
 
     setSelectedLetters([]);
@@ -199,12 +203,6 @@ const WordSearchGame = () => {
     setFoundCells([]);
     generateNewGrid();
     setIsGameCompleted(false);
-  };
-
-  // End the game (and stop the timer)
-  const endGame = () => {
-    setIsGameActive(false);
-    // Other game end logic...
   };
 
   const CongratulatoryPopup = () => {
@@ -241,10 +239,12 @@ const WordSearchGame = () => {
     generateNewGrid();
 
     // Audio
-    const audio = new Audio("/sounds/CorrectAnswerSoundEffect.mp3");
+    const successAudio = new Audio("/sounds/CorrectAnswerSoundEffect.mp3");
+    const incorrectAudio = new Audio("/sounds/IncorrectSoundEffect.mp3");
     // audio.oncanplaythrough = () => console.log("Audio loaded");
     // audio.onerror = () => console.log("Error loading audio");
-    setSuccessSound(audio);
+    setSuccessSound(successAudio);
+    setIncorrectSound(incorrectAudio);
   }, []);
 
   useEffect(() => {
