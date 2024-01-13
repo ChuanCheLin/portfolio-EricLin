@@ -61,7 +61,7 @@ const Experience = () => {
             work="Developed a leaderboard for designers to compete for rewards using NextJS, ExpressJS, and MySQL."
           />
           <Details
-            position="Natural Language Processing (NLP) Engineering Intern"
+            position="Software Engineering Intern"
             company="Raven Digital Corporation"
             companyLink="https://www.bizapedia.com/ca/raven-digital-corporation.html"
             time="Sept. 2023 – Present"
