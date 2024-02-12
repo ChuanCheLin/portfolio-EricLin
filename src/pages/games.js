@@ -3,7 +3,7 @@ import TransitionEffect from "@/components/TransitionEffect";
 import WordSearchGame from "@/components/WordSearchGame";
 import Head from "next/head";
 
-const games = () => {
+const Games = () => {
   const [currentGame, setCurrentGame] = useState(null);
 
   const renderGame = () => {
@@ -62,4 +62,4 @@ const games = () => {
   );
 };
 
-export default games;
+export default Games;
