@@ -30,17 +30,33 @@ const games = () => {
         />
       </Head>
       <TransitionEffect />
-      <main className="flex flex-col items-center justify-center w-full min-h-screen p-8 text-dark dark:text-light">
-        <div className="flex justify-center space-x-4 mb-2">
-          <button
-            onClick={() => setCurrentGame("wordSearch")}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
-          >
-            Word Search Game
-          </button>
-          {/* Add more buttons for additional games with similar styling */}
+      <main className="relative flex flex-col items-center justify-between w-full min-h-screen p-8 text-dark dark:text-light">
+        {/* Game area */}
+        <div className="flex-grow">{renderGame()}</div>
+
+        {/* Game selection and exit buttons */}
+        <div className="w-full flex justify-between items-end px-4 pb-4">
+          {/* Game selection buttons at the bottom */}
+          <div className="space-x-4">
+            <button
+              onClick={() => setCurrentGame("wordSearch")}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            >
+              Word Search Game
+            </button>
+            {/* More buttons for additional games */}
+          </div>
+
+          {/* Exit game button at the bottom right */}
+          {currentGame && (
+            <button
+              onClick={() => setCurrentGame(null)} // Allow the user to exit the current game
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            >
+              Exit Game
+            </button>
+          )}
         </div>
-        {renderGame()}
       </main>
     </>
   );

@@ -321,54 +321,69 @@ const WordSearchGame = () => {
       <h2 className="text-2xl sm:text-lg font-bold mb-4 dark:text-white">
         Word Search Game
       </h2>
-      <div className="flex flex-row items-start justify-center gap-10 w-full">
-        {/* Scoreboard */}
-        <div className="flex-grow-0 dark:text-white min-w-[200px]">
-          <h3 className="text-lg sm:text-sm font-semibold mb-2">Scoreboard</h3>
-          <div className="sm:text-xs">Words Found: {foundWords.length}</div>
-          <div className="sm:text-xs">Time Elapsed: {timeElapsed} seconds</div>
-          <button
-            onClick={startGame}
-            className="sm:text-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 sm:py-1 sm:px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            New Game
-          </button>
+
+      <div className="flex justify-between items-start w-full max-w-4xl mx-auto">
+        {/* Scoreboard - Left */}
+        <div className="w-1/4 mr-6">
+          {" "}
+          {/* Adjust width as needed */}
+          {/* Scoreboard */}
+          <div className="flex-grow-0 dark:text-white min-w-[250px]">
+            <h3 className="text-lg sm:text-sm font-semibold mb-2">
+              Scoreboard
+            </h3>
+            <div className="sm:text-xs">Words Found: {foundWords.length}</div>
+            <div className="sm:text-xs">
+              Time Elapsed: {timeElapsed} seconds
+            </div>
+            <button
+              onClick={startGame}
+              className="sm:text-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 sm:py-1 sm:px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              New Game
+            </button>
+          </div>
         </div>
 
         {/* Game Grid */}
-        <div ref={gridRef} className="grid grid-cols-10 gap-1">
-          {grid.map((row, rowIndex) =>
-            row.map((cell, cellIndex) => (
-              <button
-                key={`${rowIndex}-${cellIndex}`}
-                className={`border border-gray-300 p-2 sm:p-0 text-lg sm:text-xs dark:text-black ${
-                  foundCells.some(
-                    (foundCell) =>
-                      foundCell.x === cellIndex && foundCell.y === rowIndex
-                  )
-                    ? "bg-green-200" // Different color for cells in found words
-                    : dragSelection.some(
-                        (selectedCell) =>
-                          selectedCell.x === cellIndex &&
-                          selectedCell.y === rowIndex
-                      )
-                    ? "bg-blue-200" // Highlight color for cells in drag selection
-                    : "bg-white"
-                }`}
-                onMouseDown={() => handleMouseDown(rowIndex, cellIndex)}
-                onMouseEnter={() => handleMouseEnter(rowIndex, cellIndex)}
-                onMouseUp={handleMouseUp}
-                onTouchStart={(e) => handleTouchDown(e)}
-                onTouchMove={(e) => handleTouchEnter(e)}
-                onTouchEnd={handleMouseUp}
-              >
-                {cell}
-              </button>
-            ))
-          )}
+        {/* Game Grid - Center */}
+        <div className="flex-grow">
+          <div className="grid grid-cols-10 gap-1">
+            {grid.map((row, rowIndex) =>
+              row.map((cell, cellIndex) => (
+                <button
+                  key={`${rowIndex}-${cellIndex}`}
+                  className={`border border-gray-300 p-2 sm:p-0 text-lg sm:text-xs dark:text-black ${
+                    foundCells.some(
+                      (foundCell) =>
+                        foundCell.x === cellIndex && foundCell.y === rowIndex
+                    )
+                      ? "bg-green-200" // Different color for cells in found words
+                      : dragSelection.some(
+                          (selectedCell) =>
+                            selectedCell.x === cellIndex &&
+                            selectedCell.y === rowIndex
+                        )
+                      ? "bg-blue-200" // Highlight color for cells in drag selection
+                      : "bg-white"
+                  }`}
+                  onMouseDown={() => handleMouseDown(rowIndex, cellIndex)}
+                  onMouseEnter={() => handleMouseEnter(rowIndex, cellIndex)}
+                  onMouseUp={handleMouseUp}
+                  onTouchStart={(e) => handleTouchDown(e)}
+                  onTouchMove={(e) => handleTouchEnter(e)}
+                  onTouchEnd={handleMouseUp}
+                >
+                  {cell}
+                </button>
+              ))
+            )}
+          </div>
         </div>
         {/* Target Words */}
-        <div>
+        <div className="w-1/4 ml-6">
+          {" "}
+          {/* Adjust width as needed */}
           <h3 className="text-lg sm:text-xs font-semibold mb-2 dark:text-white flex-grow-0">
             Target Words
           </h3>
