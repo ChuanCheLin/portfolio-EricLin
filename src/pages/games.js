@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TransitionEffect from "@/components/TransitionEffect";
 import WordSearchGame from "@/components/WordSearchGame";
 import Head from "next/head";
+import MirrorMazeGame from "@/components/MirrorMazeGame";
 
 const Games = () => {
   const [currentGame, setCurrentGame] = useState(null);
@@ -10,7 +11,9 @@ const Games = () => {
     switch (currentGame) {
       case "wordSearch":
         return <WordSearchGame />;
-      // Add cases for other games as you implement them
+      case "mirrorMaze":
+        return <MirrorMazeGame />;
+
       default:
         return (
           <div className="flex justify-center items-center h-64">
@@ -43,6 +46,12 @@ const Games = () => {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
             >
               Word Search Game
+            </button>
+            <button
+              onClick={() => setCurrentGame("mirrorMaze")}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            >
+              Mirror Maze Game
             </button>
             {/* More buttons for additional games */}
           </div>
