@@ -323,7 +323,7 @@ const WordSearchGame = () => {
       </h2>
       <div className="flex flex-row items-start justify-center gap-10 w-full">
         {/* Scoreboard */}
-        <div className="flex-grow-0 dark:text-white">
+        <div className="flex-grow-0 dark:text-white min-w-[200px]">
           <h3 className="text-lg sm:text-sm font-semibold mb-2">Scoreboard</h3>
           <div className="sm:text-xs">Words Found: {foundWords.length}</div>
           <div className="sm:text-xs">Time Elapsed: {timeElapsed} seconds</div>
