@@ -100,6 +100,7 @@ const WordSearchGame = () => {
   const [isGameCompleted, setIsGameCompleted] = useState(false);
   const [incorrectSound, setIncorrectSound] = useState();
   const gridRef = useRef(null);
+  const isDarkMode = document.body.classList.contains("dark");
 
   const generateNewGrid = () => {
     const selectedWords = selectRandomWords(wordPool, targetNum); // Choose how many words you want to place
@@ -305,12 +306,13 @@ const WordSearchGame = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "white",
+    backgroundColor: isDarkMode ? "#1b1b1b" : "white", // Adjust colors for dark mode
+    color: isDarkMode ? "white" : "black", // Text color for dark mode
     padding: "20px",
     borderRadius: "10px",
     boxShadow: "0px 0px 10px rgba(0,0,0,0.5)",
     display: successMessage ? "block" : "none",
-    zIndex: 1000, // Ensure it's above other elements
+    zIndex: 1000,
   };
 
   return (
@@ -339,7 +341,7 @@ const WordSearchGame = () => {
             row.map((cell, cellIndex) => (
               <button
                 key={`${rowIndex}-${cellIndex}`}
-                className={`border border-gray-300 p-2 sm:p-0 text-lg sm:text-xs ${
+                className={`border border-gray-300 p-2 sm:p-0 text-lg sm:text-xs dark:text-black ${
                   foundCells.some(
                     (foundCell) =>
                       foundCell.x === cellIndex && foundCell.y === rowIndex
