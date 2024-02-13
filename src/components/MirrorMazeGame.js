@@ -4,12 +4,22 @@ const MirrorMazeGame = () => {
   const [puzzle, setPuzzle] = useState(null);
 
   useEffect(() => {
-    const fetchPuzzle = async () => {
-      const response = await fetch(
-        "http://127.0.0.1:5000/generate_puzzle?height=5&width=5"
-      );
-      const data = await response.json();
-      setPuzzle(data);
+    const fetchPuzzle = async (attempts = 5) => {
+      // Set the number of attempts here
+      try {
+        const response = await fetch(
+          "https://vercel-serverless-python-xi.vercel.app/api/generate_puzzle.py"
+        );
+        if (!response.ok) throw new Error("Server responded with an error"); // Check if response is ok (status in the range 200-299)
+        const data = await response.json();
+        setPuzzle(data);
+      } catch (error) {
+        console.error("Fetch error:", error.message);
+        if (attempts > 1) {
+          console.log(`Retrying... Attempts left: ${attempts - 1}`);
+          setTimeout(() => fetchPuzzle(attempts - 1), 2000); // Wait 2 seconds before retrying
+        }
+      }
     };
 
     fetchPuzzle();
