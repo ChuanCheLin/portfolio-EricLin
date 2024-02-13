@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const MirrorMazeGame = () => {
   const [puzzle, setPuzzle] = useState(null);
+  const [showSolution, setShowSolution] = useState(false);
+
+  const toggleSolutionVisibility = () => setShowSolution(!showSolution); // Toggles the solution visibility
 
   useEffect(() => {
     const fetchPuzzle = async (attempts = 5) => {
@@ -9,6 +12,7 @@ const MirrorMazeGame = () => {
       try {
         const response = await fetch(
           "https://vercel-serverless-python-xi.vercel.app/api/generate_puzzle.py"
+          // "http://localhost:3001/api/generate_puzzle.py" // dev
         );
         if (!response.ok) throw new Error("Server responded with an error"); // Check if response is ok (status in the range 200-299)
         const data = await response.json();
@@ -25,10 +29,38 @@ const MirrorMazeGame = () => {
     fetchPuzzle();
   }, []);
 
-  if (!puzzle) return <div>Loading puzzle...</div>;
+  if (!puzzle) {
+    return (
+      <div className="text-center">
+        <div>Loading puzzle...</div>
+        {/* Tailwind CSS Spinner */}
+        <div className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin my-2"></div>
+      </div>
+    );
+  }
+  const getCellContent = (cell, rowIndex, cellIndex) => {
+    // Check for solution overlay first if visible and available
+    if (showSolution && puzzle.solution) {
+      const solutionSymbol = puzzle.solution[rowIndex][cellIndex];
+      if (["G", "V", "Z"].includes(solutionSymbol)) {
+        return solutionSymbol;
+      }
+    }
 
-  // Function to display the puzzle (simplified)
-  // Function to display the puzzle (simplified)
+    // Fallback to default content based on the puzzle grid if no solution symbol is to be overlayed
+    switch (cell) {
+      case 0:
+        return " ";
+      case 1:
+        return "/";
+      case 2:
+        return "\\";
+      default:
+        return "?"; // Unexpected value, but you might want to handle it differently
+    }
+  };
+
+  // Function to display the puzzle
   const displayPuzzle = () => {
     if (!puzzle || !puzzle.grid) return <div>No puzzle to display</div>;
 
@@ -88,20 +120,7 @@ const MirrorMazeGame = () => {
             {puzzle.grid.map((row, rowIndex) => (
               <div key={rowIndex} style={{ display: "flex" }}>
                 {row.map((cell, cellIndex) => {
-                  let content;
-                  switch (cell) {
-                    case 0: // Empty
-                      content = " ";
-                      break;
-                    case 1: // Mirror "/"
-                      content = "/";
-                      break;
-                    case 2: // Mirror "\"
-                      content = "\\";
-                      break;
-                    default:
-                      content = "?"; // Unexpected value
-                  }
+                  let content = getCellContent(cell, rowIndex, cellIndex); // Get cell content, including overlaying solution if applicable
 
                   return (
                     <div
@@ -152,16 +171,12 @@ const MirrorMazeGame = () => {
     );
   };
 
-  // Function to display the solution (simplified)
-  const displaySolution = () => {
-    // Implement based on how you want to display it
-  };
-
   return (
     <div>
       {displayPuzzle()}
       <div style={{ marginTop: "10px", textAlign: "center" }}>
-        <button onClick={displaySolution}>Show Solution</button>
+        {/* Button to toggle solution visibility */}
+        <button onClick={toggleSolutionVisibility}>Toggle Solution</button>
       </div>
     </div>
   );
