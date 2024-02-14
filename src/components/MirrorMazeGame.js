@@ -356,18 +356,17 @@ const MirrorMazeGame = () => {
         </div>
 
         {/* How to Play Text */}
-        <div style={{ textAlign: "left", marginBottom: "20px" }}>
+        <div>
           To assign a monster to a square, first click on the desired square to
           highlight it. Then, press one of the following keys on your keyboard
-          to place a specific monster: 'G' for a Ghost, 'V' for a Vampire, or
-          'Z' for a Zombie. To remove a monster from a square, click on the
-          square containing the monster and hit the Backspace key to erase it.
+          to place a specific monster: &apos;G&apos; for a Ghost, &apos;V&apos;
+          for a Vampire, or &apos;Z&apos; for a Zombie.
         </div>
       </div>
-
-      {/* Puzzle display (already centered horizontally) */}
-      {displayPuzzle()}
-
+      <div style={{ marginTop: "20px" }}>
+        {/* Puzzle display (already centered horizontally) */}
+        {displayPuzzle()}
+      </div>
       <div style={{ marginTop: "20px" }}>
         {" "}
         {/* Button to toggle solution visibility */}
