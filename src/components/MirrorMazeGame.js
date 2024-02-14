@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+// import zombieImage from "../../public/images/games/MirrorMaze/zombie.png";
+// import vampireImage from "../../public/images/games/MirrorMaze/vampire.png";
+// import ghostImage from "../../public/images/games/MirrorMaze/ghost.png";
 
 const MirrorMazeGame = () => {
   const [puzzle, setPuzzle] = useState(null);
@@ -38,16 +41,42 @@ const MirrorMazeGame = () => {
       </div>
     );
   }
+
   const getCellContent = (cell, rowIndex, cellIndex) => {
     // Check for solution overlay first if visible and available
     if (showSolution && puzzle.solution) {
       const solutionSymbol = puzzle.solution[rowIndex][cellIndex];
-      if (["G", "V", "Z"].includes(solutionSymbol)) {
-        return solutionSymbol;
+      switch (solutionSymbol) {
+        case "Z":
+          return (
+            <img
+              src="/images/games/MirrorMaze/zombie.png"
+              alt="Zombie"
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          );
+        case "V":
+          return (
+            <img
+              src="/images/games/MirrorMaze/vampire.png"
+              alt="Vampire"
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          );
+        case "G":
+          return (
+            <img
+              src="/images/games/MirrorMaze/ghost.png"
+              alt="Ghost"
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          );
+        default:
+          break; // Leave the default handling for non-solution cells
       }
     }
 
-    // Fallback to default content based on the puzzle grid if no solution symbol is to be overlayed
+    // Fallback to default content based on the puzzle grid if no solution symbol is to be overlaid
     switch (cell) {
       case 0:
         return " ";
@@ -56,7 +85,7 @@ const MirrorMazeGame = () => {
       case 2:
         return "\\";
       default:
-        return "?"; // Unexpected value, but you might want to handle it differently
+        return "?"; // Unexpected value
     }
   };
 
