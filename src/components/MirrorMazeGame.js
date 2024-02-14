@@ -32,21 +32,29 @@ const MirrorMazeGame = () => {
 
   useEffect(() => {
     const handleKeyPress = (event) => {
-      if (!selectedCell) return;
+      if (!selectedCell || !puzzle) return;
 
       const { rowIndex, cellIndex } = selectedCell;
-      const newPuzzle = { ...puzzle }; // Make a shallow copy of the puzzle state
-      const monsters = { G: "Ghost", V: "Vampire", Z: "Zombie" };
+      const key = event.key.toUpperCase();
+      const monsters = ["G", "V", "Z"]; // Define the valid monster types
 
-      if (event.key.toUpperCase() in monsters) {
-        // Place monster
-        newPuzzle.grid[rowIndex][cellIndex] = event.key.toUpperCase();
-      } else if (event.key === "Backspace") {
-        // Erase monster
-        newPuzzle.grid[rowIndex][cellIndex] = 0; // Assuming 0 represents an empty cell
+      // Ensure we only update the puzzle for valid monster keys or backspace
+      if (monsters.includes(key) || event.key === "Backspace") {
+        setPuzzle((currentPuzzle) => {
+          // Create a deep copy of the current puzzle to maintain immutability
+          const newPuzzle = JSON.parse(JSON.stringify(currentPuzzle));
+
+          if (event.key === "Backspace") {
+            // Erase the monster from the cell
+            newPuzzle.grid[rowIndex][cellIndex] = 0; // Assuming 0 represents an empty cell
+          } else {
+            // Place the monster in the cell
+            newPuzzle.grid[rowIndex][cellIndex] = key;
+          }
+
+          return newPuzzle;
+        });
       }
-
-      setPuzzle(newPuzzle);
     };
 
     document.addEventListener("keydown", handleKeyPress);
@@ -68,7 +76,7 @@ const MirrorMazeGame = () => {
   };
 
   const getCellContent = (cell, rowIndex, cellIndex) => {
-    // Check for solution overlay first if visible and available
+    // Check for solution overlay first if the user choose to see the solution
     if (showSolution && puzzle.solution) {
       const solutionSymbol = puzzle.solution[rowIndex][cellIndex];
       switch (solutionSymbol) {
