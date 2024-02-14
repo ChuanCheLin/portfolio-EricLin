@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import zombieImage from "../../public/images/games/MirrorMaze/zombie.png";
-// import vampireImage from "../../public/images/games/MirrorMaze/vampire.png";
-// import ghostImage from "../../public/images/games/MirrorMaze/ghost.png";
 
 const MirrorMazeGame = () => {
   const [puzzle, setPuzzle] = useState(null);
   const [showSolution, setShowSolution] = useState(false);
+  const [selectedCell, setSelectedCell] = useState(null); // { rowIndex: null, cellIndex: null }
 
   const toggleSolutionVisibility = () => setShowSolution(!showSolution); // Toggles the solution visibility
 
@@ -32,6 +30,29 @@ const MirrorMazeGame = () => {
     fetchPuzzle();
   }, []);
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (!selectedCell) return;
+
+      const { rowIndex, cellIndex } = selectedCell;
+      const newPuzzle = { ...puzzle }; // Make a shallow copy of the puzzle state
+      const monsters = { G: "Ghost", V: "Vampire", Z: "Zombie" };
+
+      if (event.key.toUpperCase() in monsters) {
+        // Place monster
+        newPuzzle.grid[rowIndex][cellIndex] = event.key.toUpperCase();
+      } else if (event.key === "Backspace") {
+        // Erase monster
+        newPuzzle.grid[rowIndex][cellIndex] = 0; // Assuming 0 represents an empty cell
+      }
+
+      setPuzzle(newPuzzle);
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+    return () => document.removeEventListener("keydown", handleKeyPress);
+  }, [selectedCell, puzzle]);
+
   if (!puzzle) {
     return (
       <div className="text-center">
@@ -41,6 +62,10 @@ const MirrorMazeGame = () => {
       </div>
     );
   }
+
+  const handleCellClick = (rowIndex, cellIndex) => {
+    setSelectedCell({ rowIndex, cellIndex });
+  };
 
   const getCellContent = (cell, rowIndex, cellIndex) => {
     // Check for solution overlay first if visible and available
@@ -72,14 +97,37 @@ const MirrorMazeGame = () => {
             />
           );
         default:
-          break; // Leave the default handling for non-solution cells
+          // Handle other solution symbols or leave as is for non-solution cells
+          break;
       }
     }
 
-    // Fallback to default content based on the puzzle grid if no solution symbol is to be overlaid
+    // Logic for displaying cell content based on the current cell value
     switch (cell) {
-      case 0:
-        return " ";
+      case "Z":
+        return (
+          <img
+            src="/images/games/MirrorMaze/zombie.png"
+            alt="Zombie"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+        );
+      case "V":
+        return (
+          <img
+            src="/images/games/MirrorMaze/vampire.png"
+            alt="Vampire"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+        );
+      case "G":
+        return (
+          <img
+            src="/images/games/MirrorMaze/ghost.png"
+            alt="Ghost"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+        );
       case 1:
         return (
           <img
@@ -96,8 +144,10 @@ const MirrorMazeGame = () => {
             style={{ maxWidth: "100%", height: "auto" }}
           />
         );
+      case 0:
+        return " "; // Empty cell
       default:
-        return "?"; // Unexpected value
+        return "?"; // Handle unexpected values or add logic for other cell types
     }
   };
 
@@ -197,6 +247,7 @@ const MirrorMazeGame = () => {
                   return (
                     <div
                       key={cellIndex}
+                      onClick={() => handleCellClick(rowIndex, cellIndex)}
                       style={{
                         width: "50px",
                         height: "50px",
@@ -204,7 +255,14 @@ const MirrorMazeGame = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: "30px",
+                        fontSize: "20px",
+                        cursor: "pointer",
+                        backgroundColor:
+                          selectedCell &&
+                          selectedCell.rowIndex === rowIndex &&
+                          selectedCell.cellIndex === cellIndex
+                            ? "#add8e6"
+                            : "transparent", // Highlight selected cell
                       }}
                     >
                       {content}
