@@ -325,9 +325,52 @@ const MirrorMazeGame = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column", // Stack children vertically
+        justifyContent: "center", // Center children vertically in the container
+        alignItems: "center", // Center children horizontally
+        minHeight: "100vh", // Ensure the container can expand to at least the height of the viewport
+      }}
+    >
+      {/* Display the game rules */}
+      <div style={{ fontSize: "16px" }}>
+        {/* Game Rules Title */}
+        <div style={{ textAlign: "center", marginBottom: "10px" }}>
+          <strong>Game Rules:</strong>
+        </div>
+
+        {/* Game Rules Text */}
+        <div style={{ textAlign: "left", marginBottom: "20px" }}>
+          Fill in all grid squares without mirrors with either a ghost, a
+          vampire, or a zombie. Edge numbers indicate the total monsters visible
+          from that vantage point along a row or column. Zombies are always
+          visible. Ghosts can only be seen if reflected in a mirror. Vampires
+          appear only when there are no mirrors reflecting them.
+        </div>
+
+        {/* How to Play Title */}
+        <div style={{ textAlign: "center", marginBottom: "10px" }}>
+          <strong>How to Play:</strong>
+        </div>
+
+        {/* How to Play Text */}
+        <div style={{ textAlign: "left", marginBottom: "20px" }}>
+          To assign a monster to a square, first click on the desired square to
+          highlight it. Then, press one of the following keys on your keyboard
+          to place a specific monster: 'G' for a Ghost, 'V' for a Vampire, or
+          'Z' for a Zombie. To remove a monster from a square, click on the
+          square containing the monster and hit the Backspace key to erase it.
+        </div>
+      </div>
+
+      {/* Puzzle display (already centered horizontally) */}
       {displayPuzzle()}
-      <div style={{ marginTop: "10px", textAlign: "center" }}>
+
+      <div style={{ marginTop: "20px" }}>
+        {" "}
+        {/* Adjust margin as needed */}
         {/* Button to toggle solution visibility */}
         <button onClick={toggleSolutionVisibility}>Toggle Solution</button>
       </div>
