@@ -338,7 +338,7 @@ const WordSearchGame = () => {
             </div>
             <button
               onClick={startGame}
-              className="sm:text-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 sm:py-1 sm:px-4 rounded focus:outline-none focus:shadow-outline"
+              className="sm:text-xs bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 sm:py-1 sm:px-4 rounded focus:outline-none focus:shadow-outline"
             >
               New Game
             </button>
