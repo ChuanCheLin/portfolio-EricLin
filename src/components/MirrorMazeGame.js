@@ -52,7 +52,7 @@ const MirrorMazeGame = () => {
             <img
               src="/images/games/MirrorMaze/zombie.png"
               alt="Zombie"
-              style={{ maxWidth: "100%", height: "auto" }}
+              style={{ maxWidth: "90%", height: "auto" }}
             />
           );
         case "V":
@@ -60,7 +60,7 @@ const MirrorMazeGame = () => {
             <img
               src="/images/games/MirrorMaze/vampire.png"
               alt="Vampire"
-              style={{ maxWidth: "100%", height: "auto" }}
+              style={{ maxWidth: "90%", height: "auto" }}
             />
           );
         case "G":
@@ -68,7 +68,7 @@ const MirrorMazeGame = () => {
             <img
               src="/images/games/MirrorMaze/ghost.png"
               alt="Ghost"
-              style={{ maxWidth: "100%", height: "auto" }}
+              style={{ maxWidth: "90%", height: "auto" }}
             />
           );
         default:
@@ -81,9 +81,21 @@ const MirrorMazeGame = () => {
       case 0:
         return " ";
       case 1:
-        return "/";
+        return (
+          <img
+            src="/images/games/MirrorMaze/left_slash.png"
+            alt="Mirror"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+        );
       case 2:
-        return "\\";
+        return (
+          <img
+            src="/images/games/MirrorMaze/right_slash.png"
+            alt="Mirror"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+        );
       default:
         return "?"; // Unexpected value
     }
@@ -105,9 +117,25 @@ const MirrorMazeGame = () => {
         >
           {Object.entries(puzzle.monster_nums).map(
             ([monster, count], index) => (
-              <div key={index} style={{ margin: "0 10px" }}>
+              <div
+                key={index}
+                style={{ margin: "0 10px", textAlign: "center" }}
+              >
                 {/* Render your monster icon here, based on the monster type */}
-                {monster}: {count}
+                <img
+                  src={
+                    monster === "Z"
+                      ? "/images/games/MirrorMaze/zombie.png"
+                      : monster === "V"
+                      ? "/images/games/MirrorMaze/vampire.png"
+                      : monster === "G"
+                      ? "/images/games/MirrorMaze/ghost.png"
+                      : undefined // Fallback for an unexpected monster type
+                  }
+                  alt={monster}
+                  style={{ maxWidth: "50px", height: "auto" }} // Adjust size as needed
+                />
+                <div>{count}</div>
               </div>
             )
           )}
@@ -118,11 +146,11 @@ const MirrorMazeGame = () => {
           style={{
             display: "flex",
             justifyContent: "center",
-            marginTop: "5px",
+            marginTop: "10px",
           }}
         >
           {puzzle.border_nums.top.map((num, index) => (
-            <div key={index} style={{ width: "30px", textAlign: "center" }}>
+            <div key={index} style={{ width: "50px", textAlign: "center" }}>
               {num}
             </div>
           ))}
@@ -130,9 +158,24 @@ const MirrorMazeGame = () => {
 
         <div style={{ display: "flex" }}>
           {/* Border numbers (left of the grid) */}
-          <div style={{ marginRight: "5px" }}>
+          <div
+            style={{
+              marginRight: "10px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
             {puzzle.border_nums.left.map((num, index) => (
-              <div key={index} style={{ height: "30px", textAlign: "center" }}>
+              <div
+                key={index}
+                style={{
+                  height: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 {num}
               </div>
             ))}
@@ -155,13 +198,13 @@ const MirrorMazeGame = () => {
                     <div
                       key={cellIndex}
                       style={{
-                        width: "30px",
-                        height: "30px",
+                        width: "50px",
+                        height: "50px",
                         border: "1px solid black",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        fontSize: "20px",
+                        fontSize: "30px",
                       }}
                     >
                       {content}
@@ -173,9 +216,24 @@ const MirrorMazeGame = () => {
           </div>
 
           {/* Border numbers (right of the grid) */}
-          <div style={{ marginLeft: "5px" }}>
+          <div
+            style={{
+              marginLeft: "10px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
             {puzzle.border_nums.right.map((num, index) => (
-              <div key={index} style={{ height: "30px", textAlign: "center" }}>
+              <div
+                key={index}
+                style={{
+                  height: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 {num}
               </div>
             ))}
@@ -191,7 +249,7 @@ const MirrorMazeGame = () => {
           }}
         >
           {puzzle.border_nums.bottom.map((num, index) => (
-            <div key={index} style={{ width: "30px", textAlign: "center" }}>
+            <div key={index} style={{ width: "50px", textAlign: "center" }}>
               {num}
             </div>
           ))}
