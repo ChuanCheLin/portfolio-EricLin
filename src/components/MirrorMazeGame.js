@@ -117,7 +117,7 @@ const MirrorMazeGame = () => {
           <img
             src="/images/games/MirrorMaze/zombie.png"
             alt="Zombie"
-            style={{ maxWidth: "100%", height: "auto" }}
+            style={{ maxWidth: "90%", height: "auto" }}
           />
         );
       case "V":
@@ -125,7 +125,7 @@ const MirrorMazeGame = () => {
           <img
             src="/images/games/MirrorMaze/vampire.png"
             alt="Vampire"
-            style={{ maxWidth: "100%", height: "auto" }}
+            style={{ maxWidth: "90%", height: "auto" }}
           />
         );
       case "G":
@@ -133,7 +133,7 @@ const MirrorMazeGame = () => {
           <img
             src="/images/games/MirrorMaze/ghost.png"
             alt="Ghost"
-            style={{ maxWidth: "100%", height: "auto" }}
+            style={{ maxWidth: "90%", height: "auto" }}
           />
         );
       case 1:
@@ -370,9 +370,13 @@ const MirrorMazeGame = () => {
 
       <div style={{ marginTop: "20px" }}>
         {" "}
-        {/* Adjust margin as needed */}
         {/* Button to toggle solution visibility */}
-        <button onClick={toggleSolutionVisibility}>Toggle Solution</button>
+        <button
+          onClick={toggleSolutionVisibility}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+        >
+          Toggle Solution
+        </button>
       </div>
     </div>
   );
