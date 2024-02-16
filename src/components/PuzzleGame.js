@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-const PuzzlePiece = ({ id, x, y, onDragStart, isCorrect }) => {
+const PuzzlePiece = ({ id, x, y, onDragStart, isCorrect, backgroundImage }) => {
+  const draggable = !isCorrect; // Only allow dragging if the piece is not in its correct position
+
   return (
     <div
-      draggable
-      onDragStart={(e) => onDragStart(e, id)}
+      draggable={draggable}
+      onDragStart={draggable ? (e) => onDragStart(e, id) : undefined}
       style={{
         width: "100px",
         height: "100px",
         position: "absolute",
         left: `${x}px`,
         top: `${y}px`,
-        backgroundColor: isCorrect ? "#90EE90" : "#999",
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
         border: isCorrect ? "2px solid green" : "1px dashed #333",
-        cursor: "grab",
+        cursor: isCorrect ? "default" : "grab",
       }}
     />
   );
@@ -24,30 +27,68 @@ const PuzzleGame = () => {
   const gridSize = 3;
   const pieceSize = 100; // Assuming each piece is 100x100 pixels
   const puzzleSize = gridSize * pieceSize;
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const imageSrc = "/images/games/Puzzle/default.jpg";
 
   useEffect(() => {
-    const initialPieces = Array.from({ length: gridSize * gridSize }).map(
-      (_, index) => ({
-        id: index,
-        x: Math.random() * (puzzleSize - pieceSize),
-        y: Math.random() * (puzzleSize - pieceSize),
-        correctX: (index % gridSize) * pieceSize,
-        correctY: Math.floor(index / gridSize) * pieceSize,
-        isCorrect: false,
-      })
-    );
+    // Load the image and then create puzzle pieces based on the loaded image
+    const img = new Image();
+    img.src = imageSrc;
+    img.onload = () => {
+      setImageLoaded(true);
+      createPuzzlePieces(img);
+    };
+  }, [imageSrc]);
 
-    setPieces(initialPieces);
-  }, [gridSize, pieceSize, puzzleSize]);
+  const createPuzzlePieces = (img) => {
+    const canvasSize = img.width / gridSize; // Adjust if the image is not square
+    const pieces = [];
+    for (let y = 0; y < gridSize; y++) {
+      for (let x = 0; x < gridSize; x++) {
+        const canvas = document.createElement("canvas");
+        canvas.width = canvasSize;
+        canvas.height = canvasSize;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(
+          img,
+          x * canvasSize, // Start clipping x
+          y * canvasSize, // Start clipping y
+          canvasSize, // Clipping width
+          canvasSize, // Clipping height
+          0,
+          0, // Canvas x and y
+          canvasSize, // Canvas width
+          canvasSize // Canvas height
+        );
+        const imageURL = canvas.toDataURL();
+        pieces.push({
+          id: y * gridSize + x,
+          imageURL,
+          correctX: x * pieceSize,
+          correctY: y * pieceSize,
+          x: Math.random() * (puzzleSize - pieceSize),
+          y: Math.random() * (puzzleSize - pieceSize),
+          isCorrect: false,
+        });
+      }
+    }
+    setPieces(pieces);
+  };
 
   const handleDragStart = (e, id) => {
+    const piece = pieces.find((p) => p.id === id);
+    if (piece.isCorrect) {
+      e.preventDefault();
+      return;
+    }
+
     const offsetX = e.clientX - e.target.getBoundingClientRect().left;
     const offsetY = e.clientY - e.target.getBoundingClientRect().top;
 
-    e.dataTransfer.setData("application/reactflow", id); // Use a custom MIME type.
+    e.dataTransfer.setData("application/reactflow", id.toString());
     e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("offsetX", offsetX);
-    e.dataTransfer.setData("offsetY", offsetY);
+    e.dataTransfer.setData("offsetX", offsetX.toString());
+    e.dataTransfer.setData("offsetY", offsetY.toString());
   };
 
   const handleDrop = (e) => {
@@ -62,10 +103,9 @@ const PuzzleGame = () => {
     setPieces((currentPieces) =>
       currentPieces.map((piece) => {
         if (piece.id.toString() === id) {
-          const isCorrect =
-            Math.abs(x - piece.correctX) < 10 &&
-            Math.abs(y - piece.correctY) < 10;
-
+          const xDiff = Math.abs(x - piece.correctX);
+          const yDiff = Math.abs(y - piece.correctY);
+          const isCorrect = xDiff < 10 && yDiff < 10; // Adjust tolerance as needed
           return {
             ...piece,
             x: isCorrect ? piece.correctX : x,
@@ -84,6 +124,10 @@ const PuzzleGame = () => {
 
   const checkSolved = () => pieces.every((piece) => piece.isCorrect);
 
+  if (!imageLoaded) {
+    return <div>Loading image...</div>;
+  }
+
   return (
     <div
       style={{
@@ -101,6 +145,7 @@ const PuzzleGame = () => {
           id={piece.id}
           x={piece.x}
           y={piece.y}
+          backgroundImage={piece.imageURL}
           isCorrect={piece.isCorrect}
           onDragStart={handleDragStart}
         />
