@@ -360,7 +360,9 @@ const MirrorMazeGame = () => {
           To assign a monster to a square, first click on the desired square to
           highlight it. Then, press one of the following keys on your keyboard
           to place a specific monster: &apos;G&apos; for a Ghost, &apos;V&apos;
-          for a Vampire, or &apos;Z&apos; for a Zombie.
+          for a Vampire, or &apos;Z&apos; for a Zombie. If you need to delete a
+          monster from a square, simply press the 'Backspace' key while the
+          square is highlighted to remove the monster.
         </div>
       </div>
       <div style={{ marginTop: "20px" }}>

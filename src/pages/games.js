@@ -3,6 +3,7 @@ import TransitionEffect from "@/components/TransitionEffect";
 import WordSearchGame from "@/components/WordSearchGame";
 import Head from "next/head";
 import MirrorMazeGame from "@/components/MirrorMazeGame";
+import PuzzleGame from "@/components/PuzzleGame";
 
 const Games = () => {
   const [currentGame, setCurrentGame] = useState(null);
@@ -13,6 +14,8 @@ const Games = () => {
         return <WordSearchGame />;
       case "mirrorMaze":
         return <MirrorMazeGame />;
+      case "puzzle":
+        return <PuzzleGame />;
 
       default:
         return (
@@ -38,7 +41,7 @@ const Games = () => {
         <div className="flex-grow">{renderGame()}</div>
 
         {/* Game selection and exit buttons */}
-        <div className="w-full flex justify-between items-end px-4 pb-4">
+        <div className="w-full flex justify-between items-end px-4 py-4">
           {/* Game selection buttons at the bottom */}
           <div className="space-x-4">
             <button
@@ -52,6 +55,12 @@ const Games = () => {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
             >
               Mirror Maze Game
+            </button>
+            <button
+              onClick={() => setCurrentGame("puzzle")}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+            >
+              Puzzle Game
             </button>
             {/* More buttons for additional games */}
           </div>
